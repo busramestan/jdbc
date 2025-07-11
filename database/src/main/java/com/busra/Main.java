@@ -2,10 +2,8 @@ package com.busra;
 
 import com.busra.config.DatabaseConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;;
+import java.sql.*;
+;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,19 +26,35 @@ public class Main {
 
         //Insert data into the users table
 
-        String sql = "INSERT INTO users (name, email) VALUES (? , ?)";
+//        String sql = "INSERT INTO users (name, email) VALUES (? , ?)";
+//
+//        try (Connection connection = DatabaseConnector.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+//            preparedStatement.setString(1, "mike");
+//            preparedStatement.setString(2,"mike@gmail.com");
+//            preparedStatement.executeUpdate();
+//            System.out.println("Data inserted successfully");
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        try (Connection connection = DatabaseConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
-            preparedStatement.setString(1, "Busra");
-            preparedStatement.setString(2,"busra@gmail.com");
-            preparedStatement.executeUpdate();
-            System.out.println("Data inserted successfully");
+        String sql = "SELECT * FROM users";
+
+        try (Statement statement = DatabaseConnector.getConnection().createStatement()){
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while(resultSet.next()){
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+
+                System.out.printf("ID: %d, Name: %s, Email: %s\n", id, name, email);
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 
 
 
