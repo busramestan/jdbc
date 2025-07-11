@@ -39,27 +39,57 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
 
-        String sql = "SELECT * FROM users";
+//        String sql = "SELECT * FROM users";
+//
+//        try (Statement statement = DatabaseConnector.getConnection().createStatement()){
+//            ResultSet resultSet = statement.executeQuery(sql);
+//
+//            while(resultSet.next()){
+//                int id = resultSet.getInt("id");
+//                String name = resultSet.getString("name");
+//                String email = resultSet.getString("email");
+//
+//                System.out.printf("ID: %d, Name: %s, Email: %s\n", id, name, email);
+//            }
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        try (Statement statement = DatabaseConnector.getConnection().createStatement()){
-            ResultSet resultSet = statement.executeQuery(sql);
 
-            while(resultSet.next()){
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
+          //Update user
 
-                System.out.printf("ID: %d, Name: %s, Email: %s\n", id, name, email);
+//        String upSql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+//        try (Connection connection = DatabaseConnector.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(upSql)) {
+//            preparedStatement.setString(1, "Büşra");
+//            preparedStatement.setString(2, "büşra@gmail.com");
+//            preparedStatement.setInt(3, 1);
+//            int rowsUpdated = preparedStatement.executeUpdate();
+//
+//            if ( rowsUpdated > 0){
+//                System.out.println("User updated successfully");;
+//            }
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+        //Delete user
+
+        String delSql = "DELETE FROM users WHERE id=?";
+        try (Connection connection = DatabaseConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(delSql)){
+            preparedStatement.setInt(1, 4);
+
+            int rowsDelete = preparedStatement.executeUpdate();
+            if (rowsDelete >0) {
+                System.out.println("User deleted");
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
-
-
-
-
     }
 }
